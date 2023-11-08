@@ -1,0 +1,29 @@
+{
+  "name": "movies-mvc",
+  "version": "1.0.0",
+  "description": "Pel·licules amb Arquitectura Modelo, Vista, Controlador y MongoDB",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Elebrimir/Movies-MVC.git"
+  },
+  "keywords": [
+    "movies",
+    "mvc",
+    "node",
+    "express"
+  ],
+  "author": "Pablo Cortés Bravo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Elebrimir/Movies-MVC/issues"
+  },
+  "homepage": "https://github.com/Elebrimir/Movies-MVC#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^8.0.0"
+  }
+}
