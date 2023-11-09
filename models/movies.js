@@ -7,7 +7,6 @@ let movieSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
-    trim: true,
   },
   year: {
     type: Number,

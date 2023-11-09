@@ -1,6 +1,7 @@
 "use strict";
 
 const Movie = require("../models/movies");
+const crypto = require("crypto");
 
 //GET /movies - Retorna la llista de pel·lícules
 exports.getMovies = async (req, res) => {
@@ -17,34 +18,31 @@ exports.getMovies = async (req, res) => {
       const filteredMovies = movies.filter((movie) =>
         movie.genre.some((g) => g.toLowerCase() === genre.toLowerCase())
       );
-      res.json(filteredMovies);
+      return res.json(filteredMovies);
     }
 
     // Per a obtindre dins d'un interval de anys
     if (fromYear && toYear) {
-      //Ordenem l'array per anys de menys a més
-      const sortMovies = movies.sort((fY, tY) => {
-        return fY.year - tY.year;
-      });
+      //Ordenem per anys de menys a més
+      const sortMovies = movies.sort((a, b) => a.year - b.year);
 
       //Filtrem l'array entre les dos dades
-      const yearsFitered = sortMovies.filter(
+      const yearsFiltered = sortMovies.filter(
         (sortMovie) => sortMovie.year >= fromYear && sortMovie.year <= toYear
       );
 
-      res.json(yearsFitered);
+      return res.json(yearsFiltered);
     }
 
     // Per a ordenar per Puntuació(rate)
     if (rate) {
-      const moviesByRate = movies.sort((f, t) => {
-        return f.rate - t.rate;
-      });
-      res.json(moviesByRate);
+      //Ordenem per rate amb sort de major a menor
+      const moviesByRate = movies.sort((a, b) => b.rate - a.rate);
+      return res.json(moviesByRate);
     }
 
     //Llistat de totes les pel·lícules
-    res.json(movies);
+    return res.json(movies);
   } catch (error) {
     res.send(error);
   }
@@ -52,10 +50,16 @@ exports.getMovies = async (req, res) => {
 
 // POST /movies - Afegeix una pel·lícula
 exports.postMovie = async (req, res) => {
+  if (!req.body || !req.body.title) {
+    return res.status(400).json({ error: "Falten dades en la sol·licitud" });
+  }
+
   const { title, year, director, duration, genre, rate } = req.body;
+  const id = crypto.randomUUID();
 
   try {
     const newMovie = await Movie.create({
+      id,
       title,
       year,
       director,
@@ -63,8 +67,8 @@ exports.postMovie = async (req, res) => {
       genre,
       rate,
     });
-    res.json(newMovie);
+    res.status(201).json(newMovie);
   } catch (error) {
-    res.send(error);
+    res.status(400).json({ error: "Ha hagut un error al crear la pel·lícula" });
   }
 };
