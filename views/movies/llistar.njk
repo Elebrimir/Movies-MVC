@@ -6,10 +6,15 @@
 
  <h1>Llistat de pel·lícules</h1>
 
-    <ul>
-        {% for movie in movieS %}
-            <li> {{ movie.title }} </li>
+    <div class="list-group">
+        {% for movie in movies %}
+            <li>
+                 <a class="btn list-group-item-action" href="/movies/update/{{ movie._id }}"> {{ movie.title }} </a>
+                 <form action="/movies/delete/{{movie._id}}" method="post">
+                 <button class="btn btn-danger">Esborrar</button>
+                 </form>
+            </li>
         {% endfor %}
-    </ul>
+    </div>
 
 {% endblock %}

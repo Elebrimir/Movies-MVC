@@ -1,9 +1,10 @@
-{% extends "../base.njk" %} {% block titol %}Pel·lícules | Inserir{% endblock %}
+{% extends "../base.njk" %}
+{% block titol %}Pel·lícules | Inserir{% endblock %}
 {% block contingut %}
 
 <h1>Afegir pel·lícula</h1>
 
-<form action="/api/movies" method="post">
+<form action="/movies/inserir" method="post">
   <div class="form-group mb-3">
     <label>Títol:</label>
     <input
