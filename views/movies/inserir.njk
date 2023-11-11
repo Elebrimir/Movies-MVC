@@ -2,7 +2,7 @@
 {% block titol %}Pel·lícules | Inserir{% endblock %}
 {% block contingut %}
 
-<h1>Afegir pel·lícula</h1>
+<h1 style="height: 120px" class="text-md-center">Afegir pel·lícula</h1>
 
 <form action="/movies/inserir" method="post">
   <div class="form-group mb-3">
@@ -44,9 +44,16 @@
   <div class="form-group mb-3">
     <label>Gènere:</label>
     <select class="form-control" name="genre" multiple>
-      <option value="Sci-Fi">Sci-Fi</option>
+      <option value="Action">Action</option>
       <option value="Crime">Crime</option>
       <option value="Drama">Drama</option>
+      <option value="Adventure">Adventure</option>
+      <option value="Sci-Fi">Sci-Fi</option>
+      <option value="Romance">Romance</option>
+      <option value="Animation">Animation</option>
+      <option value="Biography">Biography</option>
+      <option value="Fantasy">Fantasy</option>
+      <option value="Historic">Historic</option>
     </select>
   </div>
 
