@@ -24,6 +24,7 @@
   "homepage": "https://github.com/Elebrimir/Movies-MVC#readme",
   "dependencies": {
     "express": "^4.18.2",
-    "mongoose": "^8.0.0"
+    "mongoose": "^8.0.0",
+    "nunjucks": "^3.2.4"
   }
 }
