@@ -4,16 +4,18 @@ const express = require("express");
 const mongoose = require("mongoose");
 const nunjucks = require("nunjucks");
 const cors = require("cors");
-const path = require('path');
-
+const path = require("path");
+const dotenv = require("dotenv").config();
 
 const moviesRouterView = require("./routes/moviesView");
 const moviesRouterAPI = require("./routes/moviesAPI");
+const usersRoutesAPI = require("./routes/users");
 
 const app = express();
-const port = 8080;
+const port = process.env.PORT;
+const host = process.env.HOST;
 
-mongoose.connect("mongodb://127.0.0.1:27017/movies");
+mongoose.connect(process.env.MONGODB_URI);
 
 nunjucks.configure("views", { autoescape: true, express: app });
 
@@ -25,12 +27,15 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/movies", moviesRouterView);
 app.use("/api/v1/movies", moviesRouterAPI);
+app.use("/api/v1/users", usersRoutesAPI);
 
 app.get("/", (req, res) => {
-    // Ruta al archivo web que quieres enviar
-    const filePath = path.join(__dirname, './views/home.njk');
+  // Ruta al archivo web que quieres enviar
+  const filePath = path.join(__dirname, "./views/home.njk");
 
-    // Enviar el archivo como respuesta
-    res.render(filePath);
-  });
-app.listen(port, () => console.log(`App escoltant en port ${port}!`));
+  // Enviar el archivo como respuesta
+  res.render(filePath);
+});
+app.listen(port, host, () =>
+  console.log(`App escoltant en http://${host}:${port}!`)
+);

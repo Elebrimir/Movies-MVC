@@ -1,6 +1,7 @@
 "use strict";
 
 const express = require("express");
+const verifyToken = require("./validate-tokens");
 
 let router = express.Router();
 
@@ -9,12 +10,11 @@ const moviesIdController = require("../controllers/moviesAPI_Id");
 
 // Controlador base
 
-//GET /api/v1/movies - Retorna la llista de pel·lícules
+//GET /api/v1/movies/ - Retorna la llista de pel·lícules
 router.get("/", moviesController.getMovies);
 
-//POST /api/v1/movies - Afegeix una pel·lícula a la llista
-router.post("/", moviesController.postMovie);
-
+//POST /api/v1/movies/create - Afegeix una pel·lícula a la llista
+router.post("/create", verifyToken, moviesController.postMovie);
 
 // Controlador que li passem el parametre _id al endpoint
 
@@ -22,9 +22,9 @@ router.post("/", moviesController.postMovie);
 router.get("/:id", moviesIdController.getMovie);
 
 //PATCH /api/v1/movies/update/:id - Modificar una pel·lícula
-router.patch("/update/:id", moviesIdController.updateMovie);
+router.patch("/update/:id", verifyToken, moviesIdController.updateMovie);
 
 //DELETE /api/v1/movies/delete/:id - Eliminar una pel·lícula en concret
-router.delete("/delete/:id", moviesIdController.deleteMovie);
+router.delete("/delete/:id", verifyToken, moviesIdController.deleteMovie);
 
 module.exports = router;
