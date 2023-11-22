@@ -9,7 +9,7 @@ const moviesIdController = require("../controllers/moviesView_Id");
 
 // Controlador base
 
-//GET /movies/llistar - Retorna la llista de pel·lícules
+//GET /movies/ - Retorna la llista de pel·lícules
 router.get("/", moviesController.getMovies);
 
 //GET /movies/inserir - Mostra el Formulari per afegir pel·lícules
@@ -24,10 +24,10 @@ router.post("/inserir", moviesController.postMovie);
 //GET /movies/:id - Mostra una pel·lícula en concret
 router.get("/:id", moviesIdController.getMovie);
 
-//GET /movies/:id - Modificar una pel·lícula
+//GET /movies/update/:id - Modificar una pel·lícula
 router.get("/update/:id", moviesIdController.updateMovieView);
 
-//POST /movies/:id - Modificar una pel·lícula
+//POST /movies/update/:id - Modificar una pel·lícula
 router.post("/update/:id", moviesIdController.updateMovie);
 
 //POST /movies/delete/:id - Eliminar una pel·lícula en concret
