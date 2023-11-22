@@ -19,7 +19,7 @@ exports.loginUser = async (req, res) => {
 
   const payload = { username: user.username, id: user._id };
 
-  const SECRET = process.env.SECRET;
+  const SECRET = process.env.SECRET_KEY;
 
   const token = jwt.sign(payload, SECRET, { expiresIn: 60 * 30 });
 
@@ -32,14 +32,16 @@ exports.registerUser = async (req, res) => {
   const saltRounds = 10;
   const passwordHash = await bcrypt.hash(password, saltRounds);
 
-  const user = new User({
-    username,
-    passwordHash,
-  });
+  try {
+    const newUser = await User.create({
+      username,
+      passwordHash,
+    });
 
-  const savedUser = await user.save().catch((error) => {
-    res.status(400).json({ error: error.message });
-  });
-
-  res.json(savedUser, username);
+    res.status(201).json(newUser.username);
+  } catch (error) {
+    res
+      .status(400)
+      .json({ error: "Ha hagut un error en el registre de l'usuari" });
+  }
 };
