@@ -8,10 +8,10 @@ const userController = require("../controllers/users");
 
 //Controladors Usuaris
 
-//POST /api/v1/movies/login - Fer login usuari
+//POST /api/v1/users/login - Fer login usuari
 router.post("/login", userController.loginUser);
 
-//POST /api/v1/movies/register - Registrar nou usuari
+//POST /api/v1/users/register - Registrar nou usuari
 router.post("/register", userController.registerUser);
 
 module.exports = router;
