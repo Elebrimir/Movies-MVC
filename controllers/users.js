@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const User = require("../models/users");
+const Role = require("../models/roles");
 
 exports.loginUser = async (req, res) => {
   const { username, password } = req.body;
@@ -17,28 +18,37 @@ exports.loginUser = async (req, res) => {
     return res.status(401).json({ error: "Usuari o Password no vàlid" });
   }
 
-  const payload = { username: user.username, id: user._id };
+  const payload = { username: user.username, id: user._id, role: user.role };
 
   const SECRET = process.env.SECRET_KEY;
 
   const token = jwt.sign(payload, SECRET, { expiresIn: 60 * 30 });
 
-  res.json({ username: user.username, userID: user._id, token });
+  res.json({ username: user.username, role: user.role, token });
 };
 
 exports.registerUser = async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, role } = req.body;
+
+  const roleAssigned = await Role.findOne({ roleName: role });
+
+  const roleCorrect = roleAssigned === null ? false : true;
+
+  if (!roleCorrect) {
+    return res.status(401).json({ error: "Rol no vàlid" });
+  }
 
   const saltRounds = 10;
   const passwordHash = await bcrypt.hash(password, saltRounds);
 
   try {
     const newUser = await User.create({
-      username,
-      passwordHash,
+      username: username,
+      passwordHash: passwordHash,
+      role: roleAssigned._id,
     });
 
-    res.status(201).json(newUser.username);
+    res.status(201).json({ username: newUser.username, role: newUser.role });
   } catch (error) {
     res
       .status(400)
