@@ -1,7 +1,7 @@
 "use strict";
 
 const express = require("express");
-const verifyToken = require("./validate-tokens");
+const verifyToken = require("../middlewares/validate-tokens");
 
 let router = express.Router();
 
