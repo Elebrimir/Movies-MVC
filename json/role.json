@@ -1,14 +1,14 @@
 [
     {
-        "name": "Administrator"
+        "roleName": "Administrator"
     },
     {
-        "name": "Superuser"
+        "roleName": "Superuser"
     },
     {
-        "name": "User"
+        "roleName": "User"
     },
     {
-        "name": "Guest"
+        "roleName": "Guest"
     }
 ]

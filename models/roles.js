@@ -3,7 +3,7 @@
 const mongoose = require("mongoose");
 
 let roleSchema = new mongoose.Schema({
-  name: {
+  roleName: {
     type: String,
     required: true,
     unique: true,
