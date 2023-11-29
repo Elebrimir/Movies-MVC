@@ -42,6 +42,32 @@ exports.updateMovie = async (req, res) => {
   }
 };
 
+//PATCH /api/v1/movies/:id/rate - Actualitza la puntuació
+exports.rateMovie = async (req, res) => {
+  const { id } = req.params;
+  const { action } = req.body;
+
+  console.log("Estic en API", req.params);
+  console.log(req.body);
+
+  try {
+    let movie = await Movie.findByIdAndUpdate(id);
+    if (action === "sumar") {
+      movie.rate += 1;
+    } else if (action === "restar") {
+      movie.rate -= 1;
+    }
+
+    await movie.save();
+
+    res.json({ succes: true, message: "Puntuació actualitzada exitosamente", movie });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ succes: false, message: "Error al actualitzar la puntuació" });
+  }
+};
+
 //DELETE /api/v1/movies/delete/:id - Elimina una pel·lícula per el id
 exports.deleteMovie = async (req, res) => {
   const { id } = req.params;
