@@ -9,7 +9,8 @@
     <div class="list-group">
         {% for movie in movies %}
             <li class="d-flex justify-content-between align-items-center">
-                 <a class="list-group-item list-group-item-action" href="/movies/update/{{ movie._id }}"> {{ movie.title }} </a>
+                 <a class="list-group-item list-group-item-action" href="/movies/{{ movie._id }}"> {{ movie.title }} </a>
+                 <a class="list-group-item list-group-item-action" href="/movies/update/{{ movie._id }}"> Actualitzar Pel·lícula</a>
                  <form action="/movies/delete/{{movie._id}}" method="post">
                  <button class="btn btn-danger">Esborrar</button>
                  </form>

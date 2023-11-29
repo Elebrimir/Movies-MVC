@@ -18,7 +18,6 @@ router.get("/inserir", moviesController.addMoviesView);
 //POST /movies/inserir - Afegeix una pel·lícula a la llista
 router.post("/inserir", moviesController.postMovie);
 
-
 // Controlador que li passem el parametre _id al endpoint
 
 //GET /movies/:id - Mostra una pel·lícula en concret
@@ -32,5 +31,8 @@ router.post("/update/:id", moviesIdController.updateMovie);
 
 //POST /movies/delete/:id - Eliminar una pel·lícula en concret
 router.post("/delete/:id", moviesIdController.deleteMovie);
+
+//POST /movies/:id/rate - Actualitzar la puntuació de la pel·lícula
+router.post("/:id/rate", moviesIdController.rateMovie);
 
 module.exports = router;
