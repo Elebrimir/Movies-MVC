@@ -35,7 +35,7 @@ router.post(
 router.get("/:id", moviesIdController.getMovie);
 
 //PATCH /api/v1/movies/:id/rate - Modificar Puntiació
-router.post("/:id/rate", moviesIdController.rateMovie);
+router.patch("/:id/rate", moviesIdController.rateMovie);
 
 //PATCH /api/v1/movies/update/:id - Modificar una pel·lícula
 router.patch(

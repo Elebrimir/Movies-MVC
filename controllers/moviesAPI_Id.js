@@ -48,10 +48,11 @@ exports.rateMovie = async (req, res) => {
   const { action } = req.body;
 
   console.log("Estic en API", req.params);
-  console.log(req.body);
+  console.log(action);
 
   try {
-    let movie = await Movie.findByIdAndUpdate(id);
+    let movie = await Movie.findById(id);
+
     if (action === "sumar") {
       movie.rate += 1;
     } else if (action === "restar") {
@@ -60,7 +61,11 @@ exports.rateMovie = async (req, res) => {
 
     await movie.save();
 
-    res.json({ succes: true, message: "Puntuació actualitzada exitosamente", movie });
+    res.json({
+      succes: true,
+      message: "Puntuació actualitzada exitosamente",
+      movie,
+    });
   } catch (error) {
     res
       .status(500)
