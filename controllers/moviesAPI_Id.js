@@ -42,7 +42,26 @@ exports.updateMovie = async (req, res) => {
   }
 };
 
-//POST /api/v1/movies/:id/rate - Actualitza la puntuació
+//GET /api/v1/movies/:id/rate - Obtidre tots els comentaris
+exports.getRate = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    let rate = await Movie.findById(id);
+
+    if (!rate) {
+      return res
+        .status(404)
+        .send("No hi ha una valoració per aquesta pel·lícula");
+    }
+
+    return res.json(rate.rate);
+  } catch (error) {
+    res.status(404).send(error);
+  }
+};
+
+//PATCH /api/v1/movies/:id/rate - Actualitza la puntuació
 exports.rateMovie = async (req, res) => {
   const { id } = req.params;
   const { action } = req.body;

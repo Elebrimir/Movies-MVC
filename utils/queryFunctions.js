@@ -1,7 +1,6 @@
 "use strict";
 
 function moviesGets(movies, genre, fromYear, toYear, rate) {
-
   // Per a ordenar per genere
   if (genre) {
     let moviesByGenre = movies.filter((movie) =>
@@ -25,9 +24,15 @@ function moviesGets(movies, genre, fromYear, toYear, rate) {
 
   // Per a ordenar per Puntuació(rate)
   if (rate) {
+
     //Ordenem per rate amb sort de major a menor
-    let moviesByRate = movies.sort((a, b) => b.rate - a.rate);
-    return moviesByRate;
+    if (rate === "descent") {
+      let rateDescent = movies.sort((a, b) => b.rate - a.rate);
+      return rateDescent;
+    } else if (rate === "ascent") {
+      let rateAscend = movies.sort((a, b) => a.rate - b.rate);
+      return rateAscend;
+    }
   }
 
   //Llistat de totes les pel·lícules

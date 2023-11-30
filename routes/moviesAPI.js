@@ -27,13 +27,18 @@ router.post("/create", verifyToken, isUser, moviesController.postMovie);
 //GET /api/v1/movies/:id - Retorna una pel·lícula en concret
 router.get("/:id", moviesIdController.getMovie);
 
-//POST /api/v1/movies/:id/rate - Modificar Puntiació i Comentaris
+//GET /api/v1/movies/:id/rate - Retorna les puntuacions
+router.get('/:id/rate',verifyToken,isGuest, moviesIdController.getRate);
+
+//POST /api/v1/movies/:id/rate - Modificar Comentaris
 router.patch("/:id/rate", verifyToken, isGuest, moviesIdController.rateMovie);
+
+//PATCH /api/v1/movies/:id/comment - Modificar Puntuació
 router.post("/:id/comment", verifyToken, isUser, moviesIdController.commentMovie);
 
 //PATCH /api/v1/movies/update/:id - Modificar una pel·lícula
-router.patch("/update/:id", verifyToken, isSuperuser, moviesIdController.updateMovie
-);
+router.patch("/update/:id", verifyToken, isSuperuser, moviesIdController.updateMovie);
+
 
 //DELETE /api/v1/movies/delete/:id - Eliminar una pel·lícula en concret
 router.delete("/delete/:id", verifyToken, isAdmin, moviesIdController.deleteMovie
