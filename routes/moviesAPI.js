@@ -20,38 +20,23 @@ const moviesIdController = require("../controllers/moviesAPI_Id");
 router.get("/", moviesController.getMovies);
 
 //POST /api/v1/movies/create - Afegeix una pel·lícula a la llista
-router.post(
-  "/create",
-  verifyToken,
-  isAdmin,
-  isSuperuser,
-  isUser,
-  moviesController.postMovie
-);
+router.post("/create", verifyToken, isUser, moviesController.postMovie);
 
 // Controlador que li passem el parametre _id al endpoint
 
 //GET /api/v1/movies/:id - Retorna una pel·lícula en concret
 router.get("/:id", moviesIdController.getMovie);
 
-//PATCH /api/v1/movies/:id/rate - Modificar Puntiació
-router.patch("/:id/rate", moviesIdController.rateMovie);
+//POST /api/v1/movies/:id/rate - Modificar Puntiació i Comentaris
+router.post("/:id/rate", verifyToken, isGuest, moviesIdController.rateMovie);
+router.post("/:id/comment", verifyToken, isUser, moviesIdController.commentMovie);
 
 //PATCH /api/v1/movies/update/:id - Modificar una pel·lícula
-router.patch(
-  "/update/:id",
-  verifyToken,
-  isAdmin,
-  isSuperuser,
-  moviesIdController.updateMovie
+router.patch("/update/:id", verifyToken, isSuperuser, moviesIdController.updateMovie
 );
 
 //DELETE /api/v1/movies/delete/:id - Eliminar una pel·lícula en concret
-router.delete(
-  "/delete/:id",
-  verifyToken,
-  isAdmin,
-  moviesIdController.deleteMovie
+router.delete("/delete/:id", verifyToken, isAdmin, moviesIdController.deleteMovie
 );
 
 module.exports = router;

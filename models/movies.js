@@ -45,7 +45,7 @@ let movieSchema = new mongoose.Schema(
       max: 10,
       default: 5,
     },
-    commets: [commentsSchema],
+    comments: [commentsSchema],
   },
   { versionKey: "__v" }
 );
