@@ -42,13 +42,10 @@ exports.updateMovie = async (req, res) => {
   }
 };
 
-//PATCH /api/v1/movies/:id/rate - Actualitza la puntuació
+//POST /api/v1/movies/:id/rate - Actualitza la puntuació
 exports.rateMovie = async (req, res) => {
   const { id } = req.params;
   const { action } = req.body;
-
-  console.log("Estic en API", req.params);
-  console.log(req.body);
 
   try {
     let movie = await Movie.findByIdAndUpdate(id);
@@ -60,11 +57,57 @@ exports.rateMovie = async (req, res) => {
 
     await movie.save();
 
-    res.json({ succes: true, message: "Puntuació actualitzada exitosamente", movie });
+    res.json({
+      succes: true,
+      message: "Puntuació actualitzada exitosamente",
+      movie,
+    });
   } catch (error) {
     res
       .status(500)
       .json({ succes: false, message: "Error al actualitzar la puntuació" });
+  }
+};
+
+//POST /api/v1/movies/:id/comment - Afegir comentari
+exports.commentMovie = async (req, res) => {
+  const { id } = req.params;
+  const { comment } = req.body;
+
+  console.log("Estic en API", req.params);
+  console.log(req.body);
+
+  try {
+    let movie = await Movie.findById(id);
+    if (!movie) {
+      return res
+        .status(404)
+        .send(`No s'ha trobat cap pel·lícula amb l'ID ${id}`);
+    }
+
+    const { nick, commentText } = req.body;
+    if (!nick || !commentText) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Falta información del comentario" });
+    }
+    const newComment = { nick, commentText };
+
+    console.log(newComment);
+
+    movie.comments.push(newComment);
+
+    await movie.save();
+
+    res.json({
+      succes: true,
+      message: "Comentari afegit exitosamente",
+      movie,
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ succes: false, message: "Error al introduir el comentari" });
   }
 };
 
