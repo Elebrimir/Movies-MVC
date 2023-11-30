@@ -8,7 +8,7 @@ async function isUser(req, res, next) {
     const superUserRole = await Role.findOne({ roleName: "Superuser" });
     const administratorRole = await Role.findOne({ roleName: "Administrator" });
 
-    if (!userRole) {
+    if (!userRole || !superUserRole || !administratorRole) {
       return res.status(500).json({ message: "Error interno del servidor" });
     }
 

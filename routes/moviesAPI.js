@@ -28,7 +28,7 @@ router.post("/create", verifyToken, isUser, moviesController.postMovie);
 router.get("/:id", moviesIdController.getMovie);
 
 //POST /api/v1/movies/:id/rate - Modificar Puntiació i Comentaris
-router.post("/:id/rate", verifyToken, isGuest, moviesIdController.rateMovie);
+router.patch("/:id/rate", verifyToken, isGuest, moviesIdController.rateMovie);
 router.post("/:id/comment", verifyToken, isUser, moviesIdController.commentMovie);
 
 //PATCH /api/v1/movies/update/:id - Modificar una pel·lícula

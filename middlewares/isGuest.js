@@ -4,13 +4,15 @@ const Role = require("../models/roles");
 
 async function isGuest(req, res, next) {
   try {
-    const guestRole = await Role.findOne({ roleName: "User" });
+    const guestRole = await Role.findOne({ roleName: "Guest" });
     const userRole = await Role.findOne({ roleName: "User" });
     const superUserRole = await Role.findOne({ roleName: "Superuser" });
     const administratorRole = await Role.findOne({ roleName: "Administrator" });
 
-    if (!guestRole) {
-      return res.status(500).json({ message: "Error interno del servidor" });
+    if (!guestRole || !userRole || !superUserRole || !administratorRole) {
+      return res
+        .status(500)
+        .json({ message: "Error interno del servidor al validar Role" });
     }
 
     // Comparar la ID del rol 'Guest' amb el valor del camp 'role' de l'usuari
